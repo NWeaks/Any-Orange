@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        // Retrieve checkout count from localStorage or set it to 0 if not present
+        let checkoutCount = parseInt(localStorage.getItem("checkoutCount")) || 0;
+
+        function addToCheckout() {
+            checkoutCount++;
+            document.getElementById("checkout-btn").textContent = `Checkout (x${checkoutCount})`;
+            // Store updated checkout count in localStorage
+            localStorage.setItem("checkoutCount", checkoutCount);
+        }
+
+        // Reset checkout count to 0 when the page is loaded
+        window.addEventListener("load", function() {
+            checkoutCount = 0;
+            document.getElementById("checkout-btn").textContent = `Checkout (x${checkoutCount})`;
+            localStorage.setItem("checkoutCount", checkoutCount);
+        });
+    </script>
+    <title>Your order confirmation</title>
+    <link rel="stylesheet" type="text/css" href="AO_styling.css">
+</head>
+<body>
+    <h1>Your order confirmation</h1>
+    <h1>Your unique order code is: <span id="order-code">N/A</span></h1>
+    <!-- List of items in order -->
+    <h2>Date of confirmation: <span id="order-date">N/A</span></h2>
+    <ul id="selected-items-list">
+        <!-- Selected items will be dynamically added here -->
+    </ul>
+    <h3>Total: <span id="total-amount">£0.00</span></h3>
+    <p>© Nicholas Weaks 2024 all rights reserved</p>
+</body>
+</html>
+
+<script>
+    // Retrieve order details from localStorage
+    var orderDetails = JSON.parse(localStorage.getItem("orderDetails")) || {};
+    var selectedItemsList = document.getElementById("selected-items-list");
+    var totalAmountElement = document.getElementById("total-amount");
+    var orderCodeElement = document.getElementById("order-code");
+    var orderDateElement = document.getElementById("order-date");
+
+    // Display selected items and calculate total
+    var totalAmount = 0;
+    orderDetails.items.forEach(function(item) {
+        var listItem = document.createElement("li");
+        listItem.textContent = item.name + " - £" + item.value.toFixed(2);
+        selectedItemsList.appendChild(listItem);
+        totalAmount += item.value;
+    });
+
+    // Display total amount
+    totalAmountElement.textContent = "£" + totalAmount.toFixed(2);
+
+    // Generate random order code
+    var orderCode = Math.floor(Math.random() * 9000000000) + 1000000000;
+    orderCodeElement.textContent = orderCode;
+
+    // Display current date
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var yyyy = today.getFullYear();
+    var currentDate = dd + '/' + mm + '/' + yyyy;
+    orderDateElement.textContent = currentDate;
+
+    // Send order details to database
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:5000/add_order", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log("Order details sent to database successfully");
+        }
+    };
+    xhr.send(JSON.stringify(orderDetails));
+</script>

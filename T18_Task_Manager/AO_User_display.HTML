@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Retrieve checkout count from localStorage or set it to 0 if not present
+        let checkoutCount = parseInt(localStorage.getItem("checkoutCount")) || 0;
+
+        function addToCheckout(name, value) {
+            checkoutCount++;
+            document.getElementById("checkout-btn").textContent = `Checkout (x${checkoutCount})`;
+            // Store updated checkout count in localStorage
+            localStorage.setItem("checkoutCount", checkoutCount);
+
+            // Retrieve existing checkout items from localStorage
+            let checkoutItems = JSON.parse(localStorage.getItem("checkoutItems")) || [];
+            // Add the selected item to checkoutItems array
+            checkoutItems.push({ name: name, value: value });
+            // Store the updated checkout items back to localStorage
+            localStorage.setItem("checkoutItems", JSON.stringify(checkoutItems));
+        }
+
+        // Ensure checkout count is updated when the page loads
+        window.onload = function() {
+            // Reset checkout count to 0 when the page is loaded
+            localStorage.setItem("checkoutCount", 0);
+            document.getElementById("checkout-btn").textContent = `Checkout (x0)`;
+            // Initialize checkout items to empty array
+            localStorage.setItem("checkoutItems", "[]");
+
+        };
+        
+    </script>
+    <title>Any Orange</title>
+    <link rel="stylesheet" href="AO_styling.css">
+</head>
+<body>
+    <header>
+        <h1>Any Orange</h1>
+    </header>
+    <main class="container">
+        <p>This is the official Any Orange website where you can purchase a huge variety of different kinds of oranges!</p>
+        <ul class="orange-list">
+            <!-- Orange items -->
+            <li>
+                <h2>Orange Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Orange Orange.jpg" alt="Orange Orange">
+                <p>Weight: 300 grams</p>
+                <p>Value: £1.00</p>
+                <button onclick="addToCheckout('Orange Orange', 1.00)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Red Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Red Orange.jpg" alt="Red Orange">
+                <p>Weight: 200 grams</p>
+                <p>Value: £1.20</p>
+                <button onclick="addToCheckout('Red Orange', 1.20)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Green Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Green Orange.jpg" alt="Green Orange">
+                <p>Weight: 225 grams</p>
+                <p>Value: £1.50</p>
+                <button onclick="addToCheckout('Green Orange', 1.50)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Blue Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Blue Orange.jpg" alt="Blue Orange">
+                <p>Weight: 350 grams</p>
+                <p>Value: £2.00</p>
+                <button onclick="addToCheckout('Blue Orange', 2.00)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Yellow Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Yellow Orange.jpeg" alt="Yellow Orange">
+                <p>Weight: 300 grams</p>
+                <p>Value: £0.90</p>
+                <button onclick="addToCheckout('Yellow Orange', 0.90)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Purple Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Purple Orange.jpg" alt="Purple Orange">
+                <p>Weight: 340 grams</p>
+                <p>Value: £1.70</p>
+                <button onclick="addToCheckout('Purple Orange', 1.70)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Pink Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Pink Orange.jpg" alt="Pink Orange">
+                <p>Weight: 230 grams</p>
+                <p>Value: £1.30</p>
+                <button onclick="addToCheckout('Pink Orange', 1.30)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>White Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\White Orange.jpg" alt="White Orange">
+                <p>Weight: 80 grams</p>
+                <p>Value: £0.95</p>
+                <button onclick="addToCheckout('White Orange', 0.95)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Black Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Black Orange.jpg" alt="Black Orange">
+                <p>Weight: 400 grams</p>
+                <p>Value: £2.20</p>
+                <button onclick="addToCheckout('Black Orange', 2.20)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Brown Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Brown Orange.jpg" alt="Brown Orange">
+                <p>Weight: 25 grams</p>
+                <p>Value: £0.05</p>
+                <button onclick="addToCheckout('Brown Orange', 0.05)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Grey Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Grey Orange.jpg" alt="Grey Orange">
+                <p>Weight: 270 grams</p>
+                <p>Value: £1.15</p>
+                <button onclick="addToCheckout('Grey Orange', 1.15)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Rainbow Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Rainbow Orange.jpg" alt="Rainbow Orange">
+                <p>Weight: 360 grams</p>
+                <p>Value: £3.50</p>
+                <button onclick="addToCheckout('Rainbow Orange', 3.50)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Silver Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Silver Orange.jpg" alt="Silver Orange">
+                <p>Weight: 300000 grams</p>
+                <p>Value: £300.00</p>
+                <button onclick="addToCheckout('Silver Orange', 300.00)">Add to Checkout</button>
+            </li>
+            <li>
+                <h2>Gold Orange</h2>
+                <img src="C:\Users\nicho\OneDrive\Co-grammer coding\Task 15\Any_Orange_TM\AO_Task_Manager\Images\Gold Orange.jpg" alt="Gold Orange">
+                <p>Weight: 500000 grams</p>
+                <p>Value: £500.00</p>
+                <button onclick="addToCheckout('Gold Orange', 500.00)">Add to Checkout</button>
+            </li>
+        </ul>
+        
+        <!-- Checkout button -->
+        <button id="checkout-btn" class="checkout-btn" onclick="window.location.href = 'AO_User_checkout.HTML'">Checkout (x0)</button>
+    </main>
+    <footer>
+        <p>© Nicholas Weaks 2024 all rights reserved</p>
+    </footer>
+
+
+</body>
+</html>

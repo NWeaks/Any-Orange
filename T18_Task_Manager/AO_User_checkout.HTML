@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Checkout Page</title>
+    <link rel="stylesheet" href="AO_styling.css">
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+    </header>
+    <main class="container">
+        <h2>Selected Items</h2>
+        <ul id="selected-items-list">
+            <!-- Selected items will be dynamically added here -->
+        </ul>
+        <h3>Total:</h3>
+        <p id="total-amount">£0.00</p>
+        <button onclick="completePurchase()">Confirm Purchase</button>
+    </main>
+    <footer>
+        <p>© Nicholas Weaks 2024 all rights reserved</p>
+    </footer>
+
+    <script>
+        // Retrieve checkout items from localStorage
+        var checkoutItems = JSON.parse(localStorage.getItem("checkoutItems")) || [];
+
+        // Display selected items and calculate total
+        var selectedItemsList = document.getElementById("selected-items-list");
+        var totalAmountElement = document.getElementById("total-amount");
+        var totalAmount = 0;
+
+        checkoutItems.forEach(function(item) {
+            var listItem = document.createElement("li");
+            listItem.textContent = item.name + " - £" + item.value.toFixed(2);
+            selectedItemsList.appendChild(listItem);
+            totalAmount += item.value;
+        });
+
+        // Display total amount
+        totalAmountElement.textContent = "£" + totalAmount.toFixed(2);
+
+        // Define function to complete purchase
+        function completePurchase() {
+            // Save order details to localStorage
+            var orderDetails = {
+                items: checkoutItems,
+                totalAmount: totalAmount
+            };
+            localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+
+            // Redirect to order confirmation page
+            window.location.href = "AO_User_order_confirmation.HTML";
+        }
+
+        // Function to confirm purchase and deduct items from stock
+        function confirmPurchase() {
+            fetch('http://localhost:5000/confirm_purchase', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: localStorage.getItem("checkoutItems")
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update availability after purchase
+                updateAvailability();
+                // Reset checkout count and items after purchase
+                localStorage.setItem("checkoutCount", 0);
+                localStorage.setItem("checkoutItems", "[]");
+                document.getElementById("checkout-btn").textContent = `Checkout (x0)`;
+            })
+            .catch(error => console.error('Error confirming purchase:', error));
+        }
+    </script>
+</body>
+</html>
